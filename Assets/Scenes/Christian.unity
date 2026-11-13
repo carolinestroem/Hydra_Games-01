@@ -1302,6 +1302,9 @@ MonoBehaviour:
   moveSpeed: 3
   playerTransform: {fileID: 974630784}
   detectionRange: 10
+  attackRange: 1.5
+  explodeRange: 1.5
+  timeBeforeAttack: 1
 --- !u!1001 &2095071889624554600
 PrefabInstance:
   m_ObjectHideFlags: 0
