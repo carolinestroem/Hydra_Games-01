@@ -21,6 +21,10 @@ public class Playercontroller : MonoBehaviour
     [SerializeField]
     private float attackHitbixDistance;
     [SerializeField]
+    private GameObject clawAim;
+    [SerializeField]
+    private float clawAimDistance;
+    [SerializeField]
     private float attackTime;
     [SerializeField]
     private float attackWaitTime;
@@ -48,16 +52,19 @@ public class Playercontroller : MonoBehaviour
         moveX = Input.GetAxisRaw("Horizontal");
         moveY = Input.GetAxisRaw("Vertical");
 
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        Vector2 direction = mousePosition - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        direction.Normalize();
+
+        clawAim.transform.rotation = Quaternion.Euler(0, 0, angle);
+        clawAim.transform.position = transform.position + (Vector3)(direction * clawAimDistance);
+
         if (Input.GetMouseButtonDown(0) && canAttack)
         {
             attackHitbox.transform.position = transform.position;
             attackHitbox.transform.rotation = Quaternion.identity;
-
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            Vector2 direction = mousePosition - transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            direction.Normalize();
 
             attackHitbox.transform.rotation = Quaternion.Euler(0, 0, angle);
             attackHitbox.transform.position = attackHitbox.transform.position + (Vector3)(direction * attackHitbixDistance);

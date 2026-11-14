@@ -1,5 +1,5 @@
+
 using System.Collections;
-using Unity.Android.Gradle;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -21,6 +21,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float attackRange;
 
+    private bool playerDetected = false;
+    private bool isAttacking = false;
+
     [Header("Attack Settings")]
     [SerializeField]
     private GameObject explosionPrefab;
@@ -29,53 +32,88 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float timeBeforeAttack;
 
-    private bool isAtacking = false;
-    private bool playerDetected = false;
-    private bool playerOutOfSight = false;
+    [Header("Health And Damage")]
+    [SerializeField]
+    private float maxHealth;
+    private float currentHealth;
+    [SerializeField]
+    private float damageKnockback;
+    [SerializeField]
+    private float knockbackDecay;
 
-    // Update is called once per frame
-    void Update()
+    private Vector2 knockbackVelocity;
+
+    private void Start()
     {
-        Debug.DrawRay(transform.position, (playerTransform.position - transform.position).normalized * detectionRange, Color.red);
+        currentHealth = maxHealth;
+    }
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, (playerTransform.position - transform.position).normalized, detectionRange, ~LayerMask.GetMask("Enemy"));
+    private void Update()
+    {
+        Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
+
+        Debug.DrawRay(transform.position, directionToPlayer * detectionRange, Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, detectionRange, ~LayerMask.GetMask("Enemy"));
 
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
             playerDetected = true;
         }
-        else
-        {
-            Debug.Log("Player not detected.");
-        }
 
-        if (playerDetected && !isAtacking)
+        if (playerDetected && !isAttacking)
         {
-            Vector2 playerPos = new Vector2(playerTransform.position.x - transform.position.x, playerTransform.position.y - transform.position.y);
-            float distanceToPlayer = playerPos.magnitude;
-            Debug.Log("Distance to player: " + distanceToPlayer);
+            float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
 
             if (distanceToPlayer <= attackRange)
             {
                 StartCoroutine(Attack());
             }
-            playerPos.Normalize();
-            rb.linearVelocity = new Vector2(playerPos.x, playerPos.y) * moveSpeed;
-            if (isAtacking) rb.linearVelocity = Vector2.zero;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        Vector2 movementVelocity = Vector2.zero;
+
+        if (playerDetected && !isAttacking)
+        {
+            Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
+            movementVelocity = directionToPlayer * moveSpeed;
+        }
+
+        rb.linearVelocity = movementVelocity + knockbackVelocity;
+
+        knockbackVelocity = Vector2.MoveTowards(knockbackVelocity, Vector2.zero, knockbackDecay * Time.fixedDeltaTime);
+    }
+
+    public void TakeDamage(int damage, Vector2 playerPos)
+    {
+        currentHealth -= damage;
+
+        if (currentHealth <= 0)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Vector2 knockbackDirection = ((Vector2)transform.position - playerPos).normalized;
+        knockbackVelocity = knockbackDirection * damageKnockback;
     }
 
     private IEnumerator Attack()
     {
-        isAtacking = true;
+        isAttacking = true;
         yield return new WaitForSeconds(timeBeforeAttack);
+
         RaycastHit2D hit = Physics2D.Raycast(transform.position, (playerTransform.position - transform.position).normalized, explodeRange, ~LayerMask.GetMask("Enemy"));
 
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
             playerController.DamageByExplosion(transform.position);
         }
+
         yield return new WaitForSeconds(0.1f);
+
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
