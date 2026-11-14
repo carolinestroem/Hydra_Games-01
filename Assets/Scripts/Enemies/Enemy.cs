@@ -40,6 +40,8 @@ public class Enemy : MonoBehaviour
     private float damageKnockback;
     [SerializeField]
     private float knockbackDecay;
+    [SerializeField]
+    private GameObject damageEffect;
 
     private Vector2 knockbackVelocity;
 
@@ -95,9 +97,9 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Vector2 knockbackDirection = ((Vector2)transform.position - playerPos).normalized;
         knockbackVelocity = knockbackDirection * damageKnockback;
+        Instantiate(damageEffect, transform.position, Quaternion.Euler(0, 0, -Mathf.Atan2(knockbackDirection.y, knockbackDirection.x) * Mathf.Rad2Deg + 90));
     }
 
     private IEnumerator Attack()
@@ -114,7 +116,7 @@ public class Enemy : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
 
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Instantiate(explosionPrefab, transform.position, Quaternion.Euler(0, 0, 0));
         Destroy(gameObject);
     }
 
