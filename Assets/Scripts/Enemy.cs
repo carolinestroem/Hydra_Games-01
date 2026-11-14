@@ -69,12 +69,13 @@ public class Enemy : MonoBehaviour
     {
         isAtacking = true;
         yield return new WaitForSeconds(timeBeforeAttack);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, (playerTransform.position - transform.position).normalized, detectionRange, ~LayerMask.GetMask("Enemy"));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, (playerTransform.position - transform.position).normalized, explodeRange, ~LayerMask.GetMask("Enemy"));
 
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
-            playerController.DamageByExplosion();
+            playerController.DamageByExplosion(transform.position);
         }
+        yield return new WaitForSeconds(0.1f);
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

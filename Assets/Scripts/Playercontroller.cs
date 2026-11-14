@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Playercontroller : MonoBehaviour
 {
+    [SerializeField]
+    private SpriteRenderer sr;
+
     [Header("Controller")]
     [SerializeField]
     private Rigidbody2D rb;
     [SerializeField]
     private float speed;
+    private float moveX;
+    private float moveY;
 
     [Header("Claw")]
     [SerializeField]
@@ -17,20 +22,25 @@ public class Playercontroller : MonoBehaviour
     private float attackHitbixDistance;
     [SerializeField]
     private float attackTime;
+    private bool canAttack = true;
 
     [Header("Health And Damage")]
     [SerializeField]
     private float maxHealth;
     private float currentHealth;
     [SerializeField]
+    private float playerImmortalityTime;
+    private float currentPlayerImmortalityTime;
+    private bool isImmortal = false;
+    [SerializeField]
     private float explosionKnockback;
+    private Vector2 knockbackVelocity;
+    [SerializeField] private float knockbackDecay;
 
-    private float moveX;
-    private float moveY;
-
-    private bool canAttack = true;
-
-    // Update is called once per frame
+    private void Start()
+    {
+        currentHealth = maxHealth;
+    }
     void Update()
     {
         moveX = Input.GetAxisRaw("Horizontal");
@@ -56,12 +66,45 @@ public class Playercontroller : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2(moveX, moveY).normalized * speed;
+        Vector2 movementVelocity = new Vector2(moveX, moveY).normalized * speed;
+
+        rb.linearVelocity = movementVelocity + knockbackVelocity;
+
+        knockbackVelocity = Vector2.MoveTowards(knockbackVelocity, Vector2.zero, knockbackDecay * Time.fixedDeltaTime);
     }
 
-    public void DamageByExplosion()
+    public void DamageByExplosion(Vector2 enemyPos)
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y + explosionKnockback);
+        if (isImmortal) return;
+        isImmortal = true;
+        currentHealth -= 1;
+
+        Vector2 knockbackDirection = ((Vector2)transform.position - enemyPos).normalized;
+        knockbackVelocity = knockbackDirection * explosionKnockback;
+        StartCoroutine(ImmortalityTimer());
+    }
+
+    private IEnumerator ImmortalityTimer()
+    {
+        currentPlayerImmortalityTime = playerImmortalityTime;
+        sr.color = Color.black;
+
+        while (currentPlayerImmortalityTime > 0)
+        {
+            currentPlayerImmortalityTime -= Time.deltaTime;
+
+            float t = 1 - (currentPlayerImmortalityTime / playerImmortalityTime);
+
+            Color color = Color.Lerp(Color.black, Color.white, t);
+            color.a = sr.color.a;
+
+            sr.color = color;
+
+            yield return null;
+        }
+
+        sr.color = new Color(1, 1, 1, sr.color.a);
+        isImmortal = false;
     }
 
     private IEnumerator Attack()
