@@ -1,6 +1,6 @@
-
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField]
     private Rigidbody2D rb;
+    [SerializeField]
+    private NavMeshAgent agent;
     [SerializeField]
     private float moveSpeed;
 
@@ -48,6 +50,12 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+
+        agent.updatePosition = false;
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+
+        agent.speed = moveSpeed;
     }
 
     private void Update()
@@ -64,6 +72,7 @@ public class Enemy : MonoBehaviour
 
         if (playerDetected && !isAttacking)
         {
+            agent.destination = playerTransform.position;
             float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
 
             if (distanceToPlayer <= attackRange)
@@ -77,14 +86,22 @@ public class Enemy : MonoBehaviour
     {
         Vector2 movementVelocity = Vector2.zero;
 
+        // Keep the NavMeshAgent synced with the Rigidbody2D
+        agent.nextPosition = transform.position;
+
         if (playerDetected && !isAttacking)
         {
-            Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
-            movementVelocity = directionToPlayer * moveSpeed;
+            agent.isStopped = false;
+
+            Vector3 desiredVelocity = agent.desiredVelocity;
+            movementVelocity = new Vector2(desiredVelocity.x, desiredVelocity.y);
+        }
+        else
+        {
+            agent.isStopped = true;
         }
 
         rb.linearVelocity = movementVelocity + knockbackVelocity;
-
         knockbackVelocity = Vector2.MoveTowards(knockbackVelocity, Vector2.zero, knockbackDecay * Time.fixedDeltaTime);
     }
 
@@ -97,17 +114,20 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         Vector2 knockbackDirection = ((Vector2)transform.position - playerPos).normalized;
         knockbackVelocity = knockbackDirection * damageKnockback;
-        Instantiate(damageEffect, transform.position, Quaternion.Euler(0, 0, -Mathf.Atan2(knockbackDirection.y, knockbackDirection.x) * Mathf.Rad2Deg + 90));
+
+        Instantiate(damageEffect,transform.position,Quaternion.Euler(0, 0, -Mathf.Atan2(knockbackDirection.y, knockbackDirection.x) * Mathf.Rad2Deg + 90));
     }
 
     private IEnumerator Attack()
     {
         isAttacking = true;
-        yield return new WaitForSeconds(timeBeforeAttack);
+        agent.isStopped = true;
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, (playerTransform.position - transform.position).normalized, explodeRange, ~LayerMask.GetMask("Enemy"));
+        yield return new WaitForSeconds(timeBeforeAttack);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position,(playerTransform.position - transform.position).normalized, explodeRange, ~LayerMask.GetMask("Enemy"));
 
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
