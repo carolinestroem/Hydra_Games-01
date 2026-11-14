@@ -22,6 +22,8 @@ public class Playercontroller : MonoBehaviour
     private float attackHitbixDistance;
     [SerializeField]
     private float attackTime;
+    [SerializeField]
+    private float attackWaitTime;
     private bool canAttack = true;
 
     [Header("Health And Damage")]
@@ -113,8 +115,9 @@ public class Playercontroller : MonoBehaviour
         attackHitbox.SetActive(true);
 
         yield return new WaitForSeconds(attackTime);
-
         attackHitbox.SetActive(false);
+
+        yield return new WaitForSeconds(attackWaitTime);
         canAttack = true;
     }
 }

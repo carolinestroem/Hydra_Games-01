@@ -2075,6 +2075,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8798909299362480672, guid: 4b9ce56bca6b48c4083d96a3ba95fa6b, type: 3}
+      propertyPath: attackWaitTime
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8798909299362480672, guid: 4b9ce56bca6b48c4083d96a3ba95fa6b, type: 3}
       propertyPath: knockbackDecay
       value: 10
       objectReference: {fileID: 0}
