@@ -18,6 +18,13 @@ public class Playercontroller : MonoBehaviour
     [SerializeField]
     private float attackTime;
 
+    [Header("Health And Damage")]
+    [SerializeField]
+    private float maxHealth;
+    private float currentHealth;
+    [SerializeField]
+    private float explosionKnockback;
+
     private float moveX;
     private float moveY;
 
@@ -52,11 +59,18 @@ public class Playercontroller : MonoBehaviour
         rb.linearVelocity = new Vector2(moveX, moveY).normalized * speed;
     }
 
+    public void DamageByExplosion()
+    {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y + explosionKnockback);
+    }
+
     private IEnumerator Attack()
     {
         canAttack = false;
         attackHitbox.SetActive(true);
+
         yield return new WaitForSeconds(attackTime);
+
         attackHitbox.SetActive(false);
         canAttack = true;
     }

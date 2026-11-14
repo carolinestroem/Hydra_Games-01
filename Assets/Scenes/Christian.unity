@@ -1303,6 +1303,7 @@ MonoBehaviour:
   playerTransform: {fileID: 974630784}
   detectionRange: 10
   attackRange: 1.5
+  explosionPrefab: {fileID: 1349139007720807997, guid: 4fb05a325bf641a4283b6430ee1b5e31, type: 3}
   explodeRange: 1.5
   timeBeforeAttack: 1
 --- !u!1001 &2095071889624554600

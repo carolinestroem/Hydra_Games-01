@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField]
+    private Playercontroller playerController;
+
     [Header("Movement Settings")]
     [SerializeField]
     private Rigidbody2D rb;
@@ -19,6 +22,8 @@ public class Enemy : MonoBehaviour
     private float attackRange;
 
     [Header("Attack Settings")]
+    [SerializeField]
+    private GameObject explosionPrefab;
     [SerializeField]
     private float explodeRange;
     [SerializeField]
@@ -64,7 +69,14 @@ public class Enemy : MonoBehaviour
     {
         isAtacking = true;
         yield return new WaitForSeconds(timeBeforeAttack);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, (playerTransform.position - transform.position).normalized, detectionRange, ~LayerMask.GetMask("Enemy"));
 
+        if (hit.collider != null && hit.collider.CompareTag("Player"))
+        {
+            playerController.DamageByExplosion();
+        }
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmos()
