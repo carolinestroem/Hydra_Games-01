@@ -41,7 +41,13 @@ public class Playercontroller : MonoBehaviour
     [SerializeField]
     private float explosionKnockback;
     private Vector2 knockbackVelocity;
-    [SerializeField] private float knockbackDecay;
+    [SerializeField]
+    private float knockbackDecay;
+
+    [Header("Collectables")]
+    [SerializeField]
+    private int gunPartsNeeded;
+    private int gunPartsCollected = 0;
 
     private void Start()
     {
@@ -80,6 +86,20 @@ public class Playercontroller : MonoBehaviour
         rb.linearVelocity = movementVelocity + knockbackVelocity;
 
         knockbackVelocity = Vector2.MoveTowards(knockbackVelocity, Vector2.zero, knockbackDecay * Time.fixedDeltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("GunPart"))
+        {
+            Destroy(collision.gameObject);
+            gunPartsCollected++;
+
+            if (gunPartsCollected >= gunPartsNeeded)
+            {
+                Debug.Log("All gun parts collected");
+            }
+        }
     }
 
     public void DamageByExplosion(Vector2 enemyPos)
