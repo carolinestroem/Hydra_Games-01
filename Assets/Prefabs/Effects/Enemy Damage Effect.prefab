@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05782db843adde6479a5213a3dc09109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestroyAnimation
+  particle: {fileID: 1356783133917931949}
 --- !u!198 &1356783133917931949
 ParticleSystem:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Playercontroller : MonoBehaviour
 {
@@ -29,6 +30,13 @@ public class Playercontroller : MonoBehaviour
     [SerializeField]
     private float attackWaitTime;
     private bool canAttack = true;
+
+    [Header("Gun")]
+    [SerializeField]
+    private GameObject gun;
+    private bool hasGun = false;
+    private bool isGunActive = false;
+    private Vector2 recoilVelocity;
 
     [Header("Health And Damage")]
     [SerializeField]
@@ -67,7 +75,7 @@ public class Playercontroller : MonoBehaviour
         clawAim.transform.rotation = Quaternion.Euler(0, 0, angle);
         clawAim.transform.position = transform.position + (Vector3)(direction * clawAimDistance);
 
-        if (Input.GetMouseButtonDown(0) && canAttack)
+        if (Input.GetMouseButtonDown(0) && canAttack && !isGunActive)
         {
             attackHitbox.transform.position = transform.position;
             attackHitbox.transform.rotation = Quaternion.identity;
@@ -77,13 +85,26 @@ public class Playercontroller : MonoBehaviour
 
             StartCoroutine(Attack());
         }
+
+        if (hasGun)
+        {
+            if (Mouse.current.scroll.ReadValue().y > 0 || Mouse.current.scroll.ReadValue().y < 0)
+            {
+                gun.SetActive(!gun.activeSelf);
+                clawAim.SetActive(!gun.activeSelf);
+
+                if (gun.activeSelf) isGunActive = true;
+                else isGunActive = false;
+            }
+        }
     }
 
     private void FixedUpdate()
     {
         Vector2 movementVelocity = new Vector2(moveX, moveY).normalized * speed;
+        recoilVelocity = Vector2.Lerp(recoilVelocity, Vector2.zero, 5f * Time.deltaTime);
 
-        rb.linearVelocity = movementVelocity + knockbackVelocity;
+        rb.linearVelocity = movementVelocity + knockbackVelocity + recoilVelocity;
 
         knockbackVelocity = Vector2.MoveTowards(knockbackVelocity, Vector2.zero, knockbackDecay * Time.fixedDeltaTime);
     }
@@ -97,9 +118,14 @@ public class Playercontroller : MonoBehaviour
 
             if (gunPartsCollected >= gunPartsNeeded)
             {
-                Debug.Log("All gun parts collected");
+                hasGun = true;
             }
         }
+    }
+
+    public void ApplyRecoil(Vector2 force)
+    {
+        recoilVelocity += force;
     }
 
     public void DamageByExplosion(Vector2 enemyPos)
