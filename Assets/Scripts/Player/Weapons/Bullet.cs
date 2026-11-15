@@ -3,7 +3,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField]
     private GunController gunController;
+    [SerializeField]
+    private Playercontroller playercontroller;
 
     private void Start()
     {
@@ -24,6 +27,14 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            Vector2 bulletDirection = transform.right;
+            collision.gameObject.GetComponent<WallBulletImpact>().WallHit(transform.position, bulletDirection);
+
+            Destroy(gameObject);
+        }
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
@@ -33,10 +44,6 @@ public class Bullet : MonoBehaviour
                 enemy.TakeDamage(1, transform.position);
             }
 
-            Destroy(gameObject);
-        }
-        if (collision.gameObject.CompareTag("Wall"))
-        {
             Destroy(gameObject);
         }
     }

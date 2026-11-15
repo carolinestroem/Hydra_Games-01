@@ -461,6 +461,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 176178446}
+  - component: {fileID: 176178448}
   - component: {fileID: 176178445}
   - component: {fileID: 176178444}
   - component: {fileID: 176178447}
@@ -608,6 +609,19 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffffi
+--- !u!114 &176178448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176178443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d08384ac16d1d489f976dbbaaaeb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallBulletImpact
+  wallImpactEffect: {fileID: 2208375734331868280, guid: 2bcd6667b6d311e45ad9b5790986b8eb, type: 3}
 --- !u!1 &191784880
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,8 +1395,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 543188395}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.000030517578, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2523,6 +2537,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1360571309}
+  - component: {fileID: 1360571311}
   - component: {fileID: 1360571308}
   - component: {fileID: 1360571307}
   - component: {fileID: 1360571310}
@@ -2670,6 +2685,19 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffffi
+--- !u!114 &1360571311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360571306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d08384ac16d1d489f976dbbaaaeb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallBulletImpact
+  wallImpactEffect: {fileID: 2208375734331868280, guid: 2bcd6667b6d311e45ad9b5790986b8eb, type: 3}
 --- !u!1 &1409316543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2712,6 +2740,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1477546663}
+  - component: {fileID: 1477546665}
   - component: {fileID: 1477546662}
   - component: {fileID: 1477546661}
   - component: {fileID: 1477546664}
@@ -2859,6 +2888,19 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffffi
+--- !u!114 &1477546665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477546660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d08384ac16d1d489f976dbbaaaeb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallBulletImpact
+  wallImpactEffect: {fileID: 2208375734331868280, guid: 2bcd6667b6d311e45ad9b5790986b8eb, type: 3}
 --- !u!1 &1484796741
 GameObject:
   m_ObjectHideFlags: 0
@@ -3161,6 +3203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1651295998}
+  - component: {fileID: 1651296000}
   - component: {fileID: 1651295997}
   - component: {fileID: 1651295996}
   - component: {fileID: 1651295999}
@@ -3308,6 +3351,19 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffffi
+--- !u!114 &1651296000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651295995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d08384ac16d1d489f976dbbaaaeb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallBulletImpact
+  wallImpactEffect: {fileID: 2208375734331868280, guid: 2bcd6667b6d311e45ad9b5790986b8eb, type: 3}
 --- !u!1 &1774416135
 GameObject:
   m_ObjectHideFlags: 0
@@ -3553,6 +3609,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1902466256}
+  - component: {fileID: 1902466258}
   - component: {fileID: 1902466255}
   - component: {fileID: 1902466254}
   - component: {fileID: 1902466257}
@@ -3700,6 +3757,19 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffffi
+--- !u!114 &1902466258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902466253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d08384ac16d1d489f976dbbaaaeb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallBulletImpact
+  wallImpactEffect: {fileID: 2208375734331868280, guid: 2bcd6667b6d311e45ad9b5790986b8eb, type: 3}
 --- !u!1 &2000200530
 GameObject:
   m_ObjectHideFlags: 0
@@ -4165,6 +4235,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1484796742}
+  - {fileID: 793815679}
+  - {fileID: 543188398}
   - {fileID: 965039165}
   - {fileID: 535905957}
   - {fileID: 11159690}
@@ -4173,5 +4245,3 @@ SceneRoots:
   - {fileID: 1078510047}
   - {fileID: 497631251}
   - {fileID: 2095071889624554600}
-  - {fileID: 793815679}
-  - {fileID: 543188398}
