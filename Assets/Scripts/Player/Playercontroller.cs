@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,10 @@ public class Playercontroller : MonoBehaviour
 {
     [SerializeField]
     private SpriteRenderer sr;
+    [SerializeField]
+    private Animator guideAnim;
+    [SerializeField]
+    private Animator healthFullAnim;
 
     [Header("Controller")]
     [SerializeField]
@@ -42,6 +47,10 @@ public class Playercontroller : MonoBehaviour
     [SerializeField]
     private float maxHealth;
     private float currentHealth;
+    [SerializeField]
+    private TMP_Text healthText;
+    [SerializeField]
+    private float healthCollectValue;
     [SerializeField]
     private float playerImmortalityTime;
     private float currentPlayerImmortalityTime;
@@ -119,7 +128,26 @@ public class Playercontroller : MonoBehaviour
             if (gunPartsCollected >= gunPartsNeeded)
             {
                 hasGun = true;
+                guideAnim.SetTrigger("ActivateGuide");
             }
+        }
+        if (collision.gameObject.CompareTag("HealthCollect"))
+        {
+            if (currentHealth < maxHealth)
+            {
+                Destroy(collision.gameObject);
+                currentHealth = Mathf.Min(currentHealth + healthCollectValue, maxHealth);
+                healthText.text = "Health: " + currentHealth.ToString() + "/" + maxHealth.ToString();
+                healthFullAnim.SetBool("HealthFullWarning", false);
+            }
+            else healthFullAnim.SetBool("HealthFullWarning", true);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("HealthCollect"))
+        {
+            healthFullAnim.SetBool("HealthFullWarning", false);
         }
     }
 
@@ -132,7 +160,8 @@ public class Playercontroller : MonoBehaviour
     {
         if (isImmortal) return;
         isImmortal = true;
-        currentHealth -= 1;
+        currentHealth --;
+        healthText.text = "Health: " + currentHealth.ToString() + "/" + maxHealth.ToString();
 
         Vector2 knockbackDirection = ((Vector2)transform.position - enemyPos).normalized;
         knockbackVelocity = knockbackDirection * explosionKnockback;
