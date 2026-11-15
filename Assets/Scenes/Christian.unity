@@ -1822,7 +1822,7 @@ MonoBehaviour:
   distance: 1
   gunInt: 0
   guns:
-  - gunName: Sniper
+  - gunName: Gun
     gunDamage: 3
     gunRecoil: 5
     gunWaitTime: 2
