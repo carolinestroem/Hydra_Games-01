@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1139285177540760477}
   - component: {fileID: 52382050484708346}
-  - component: {fileID: 1651099422499701620}
+  - component: {fileID: -832663611018297200}
   m_Layer: 0
   m_Name: ShootSFX
   m_TagString: Untagged
@@ -46,7 +46,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 58cde5cbd853df34688e8ca7cbc2f626, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -130,7 +130,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1651099422499701620
+--- !u!114 &-832663611018297200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,5 +141,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81f4ca9ea32be714da4ac9be7786a6f0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyAfterAudio
   audioSource: {fileID: 52382050484708346}
+  activePitchRandomizer: 1
+  lowPitch: 0.9
+  highPitch: 1.1
