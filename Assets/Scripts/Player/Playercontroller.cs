@@ -17,11 +17,15 @@ public class Playercontroller : MonoBehaviour
     [SerializeField]
     private Rigidbody2D rb;
     [SerializeField]
+    private AudioSource stepsSFX;
+    [SerializeField]
     private float speed;
     private float moveX;
     private float moveY;
 
     [Header("Claw")]
+    [SerializeField]
+    private GameObject swingSFX;
     [SerializeField]
     private GameObject attackHitbox;
     [SerializeField]
@@ -75,6 +79,11 @@ public class Playercontroller : MonoBehaviour
         moveX = Input.GetAxisRaw("Horizontal");
         moveY = Input.GetAxisRaw("Vertical");
 
+        if (moveX + moveY != 0)
+        {
+            stepsSFX.Play();
+        }
+
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Vector2 direction = mousePosition - transform.position;
@@ -92,6 +101,7 @@ public class Playercontroller : MonoBehaviour
             attackHitbox.transform.rotation = Quaternion.Euler(0, 0, angle);
             attackHitbox.transform.position = attackHitbox.transform.position + (Vector3)(direction * attackHitbixDistance);
 
+            Instantiate(swingSFX, transform.position, Quaternion.Euler(0f, 0f, 90f));
             StartCoroutine(Attack());
         }
 
