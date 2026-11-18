@@ -22,9 +22,10 @@ public class Enemy : MonoBehaviour
     private float detectionRange;
     [SerializeField]
     private float attackRange;
+    public bool isPursuing;
 
     private bool playerDetected = false;
-    private bool isAttacking = false;
+    public bool isAttacking = false;
 
     [Header("Attack Settings")]
     [SerializeField]
@@ -33,6 +34,7 @@ public class Enemy : MonoBehaviour
     private float explodeRange;
     [SerializeField]
     private float timeBeforeAttack;
+
 
     [Header("Health And Damage")]
     [SerializeField]
@@ -44,6 +46,8 @@ public class Enemy : MonoBehaviour
     private float knockbackDecay;
     [SerializeField]
     private GameObject damageEffect;
+    [SerializeField]
+    private GameObject explosionSFX;
 
     private Vector2 knockbackVelocity;
 
@@ -72,11 +76,13 @@ public class Enemy : MonoBehaviour
 
         if (playerDetected && !isAttacking)
         {
+            isPursuing = true;
             agent.destination = playerTransform.position;
             float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
 
             if (distanceToPlayer <= attackRange)
             {
+                
                 StartCoroutine(Attack());
             }
         }
@@ -86,7 +92,6 @@ public class Enemy : MonoBehaviour
     {
         Vector2 movementVelocity = Vector2.zero;
 
-        // Keep the NavMeshAgent synced with the Rigidbody2D
         agent.nextPosition = transform.position;
 
         if (playerDetected && !isAttacking)
@@ -136,6 +141,7 @@ public class Enemy : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
 
+        Instantiate(explosionSFX, transform.position, Quaternion.Euler(0, 0, 0));
         Instantiate(explosionPrefab, transform.position, Quaternion.Euler(0, 0, 0));
         Destroy(gameObject);
     }

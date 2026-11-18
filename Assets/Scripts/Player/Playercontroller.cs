@@ -3,6 +3,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class Playercontroller : MonoBehaviour
 {
@@ -17,9 +18,8 @@ public class Playercontroller : MonoBehaviour
     [SerializeField]
     private Rigidbody2D rb;
     [SerializeField]
-    private AudioSource stepsSFX;
-    [SerializeField]
     private float speed;
+    public bool isMoving;
     private float moveX;
     private float moveY;
 
@@ -79,10 +79,8 @@ public class Playercontroller : MonoBehaviour
         moveX = Input.GetAxisRaw("Horizontal");
         moveY = Input.GetAxisRaw("Vertical");
 
-        if (moveX + moveY != 0)
-        {
-            stepsSFX.Play();
-        }
+        if (moveX + moveY != 0) isMoving = true;
+        else isMoving = false;
 
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 

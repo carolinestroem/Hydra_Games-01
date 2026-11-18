@@ -46,7 +46,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 58cde5cbd853df34688e8ca7cbc2f626, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -144,5 +144,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DestroyAfterAudio
   audioSource: {fileID: 52382050484708346}
   activePitchRandomizer: 1
+  deleteAudio: 1
   lowPitch: 0.9
   highPitch: 1.1
