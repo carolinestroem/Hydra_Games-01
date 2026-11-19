@@ -11,6 +11,7 @@ public class GunData : MonoBehaviour
         public float gunWaitTime;
         public float gunReloadTime;
 
+        public int bulletAmount;
         public float bulletSpeed;
     }
 }

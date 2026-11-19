@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
@@ -24,12 +25,17 @@ public class GunController : MonoBehaviour
 
     [Header("Gun Settings")]
     public int gunInt;
+    [SerializeField]
+    private GameObject reloadSFX;
+    private bool canShoot = true;
+    private int bulletsInChamber;
 
     public List<GunSettings> guns = new List<GunSettings>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        bulletsInChamber = guns[gunInt].bulletAmount;
         Debug.Log("GunController Loaded Succesfully in: " + gameObject.name);
     }
 
@@ -47,8 +53,19 @@ public class GunController : MonoBehaviour
         transform.position = player.position + (Vector3)(direction * distance);
 
         // shoot
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && canShoot)
         {
+            if (bulletsInChamber <= 0)
+            {
+                Instantiate(reloadSFX, transform.position, Quaternion.Euler(0, 0, 0));
+                StartCoroutine(GunReload(guns[gunInt].gunReloadTime));
+                bulletsInChamber = guns[gunInt].bulletAmount;
+                return;
+            }
+            else bulletsInChamber--;
+
+            StartCoroutine(GunWait(guns[gunInt].gunWaitTime));
+
             Instantiate(shootSFX, transform.position, Quaternion.Euler(0f, 0f, 90f));
 
             GameObject newBullet = Instantiate(bulletPrefab, gunPoint.position, gunPoint.rotation);
@@ -56,5 +73,17 @@ public class GunController : MonoBehaviour
             // Recoil
             playerController.ApplyRecoil(-direction * guns[gunInt].gunRecoil);
         }
+    }
+    private IEnumerator GunWait(float waitTime)
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(waitTime);
+        canShoot = true;
+    }
+    private IEnumerator GunReload(float waitTime)
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(waitTime);
+        canShoot = true;
     }
 }
