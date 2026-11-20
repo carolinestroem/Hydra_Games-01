@@ -619,13 +619,14 @@ MonoBehaviour:
   isPursuing: 0
   isAttacking: 0
   explosionPrefab: {fileID: 1349139007720807997, guid: 4fb05a325bf641a4283b6430ee1b5e31, type: 3}
-  explodeRange: 1.5
+  explodeRange: 3
   timeBeforeAttack: 2
   maxHealth: 2
   damageKnockback: 3
   knockbackDecay: 8
   damageEffect: {fileID: 3775773535762095067, guid: 0584e08d0b4dc4a4ca1774acf2724c1d, type: 3}
   explosionSFX: {fileID: 3090446682329436343, guid: 069c09f88894a6149846a5c4312c229b, type: 3}
+  isDead: 0
 --- !u!1 &79259827
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,6 +1932,7 @@ MonoBehaviour:
   knockbackDecay: 8
   damageEffect: {fileID: 3775773535762095067, guid: 0584e08d0b4dc4a4ca1774acf2724c1d, type: 3}
   explosionSFX: {fileID: 0}
+  isDead: 0
 --- !u!1 &301636646
 GameObject:
   m_ObjectHideFlags: 0
@@ -2070,13 +2072,14 @@ MonoBehaviour:
   isPursuing: 0
   isAttacking: 0
   explosionPrefab: {fileID: 1349139007720807997, guid: 4fb05a325bf641a4283b6430ee1b5e31, type: 3}
-  explodeRange: 1.5
+  explodeRange: 3
   timeBeforeAttack: 2
   maxHealth: 2
   damageKnockback: 3
   knockbackDecay: 8
   damageEffect: {fileID: 3775773535762095067, guid: 0584e08d0b4dc4a4ca1774acf2724c1d, type: 3}
   explosionSFX: {fileID: 3090446682329436343, guid: 069c09f88894a6149846a5c4312c229b, type: 3}
+  isDead: 0
 --- !u!4 &301636651
 Transform:
   m_ObjectHideFlags: 0
@@ -3359,13 +3362,14 @@ MonoBehaviour:
   isPursuing: 0
   isAttacking: 0
   explosionPrefab: {fileID: 1349139007720807997, guid: 4fb05a325bf641a4283b6430ee1b5e31, type: 3}
-  explodeRange: 1.5
+  explodeRange: 3
   timeBeforeAttack: 2
   maxHealth: 2
   damageKnockback: 3
   knockbackDecay: 8
   damageEffect: {fileID: 3775773535762095067, guid: 0584e08d0b4dc4a4ca1774acf2724c1d, type: 3}
   explosionSFX: {fileID: 3090446682329436343, guid: 069c09f88894a6149846a5c4312c229b, type: 3}
+  isDead: 0
 --- !u!1 &636950618
 GameObject:
   m_ObjectHideFlags: 0
@@ -4317,13 +4321,14 @@ MonoBehaviour:
   isPursuing: 0
   isAttacking: 0
   explosionPrefab: {fileID: 1349139007720807997, guid: 4fb05a325bf641a4283b6430ee1b5e31, type: 3}
-  explodeRange: 1.5
+  explodeRange: 3
   timeBeforeAttack: 2
   maxHealth: 2
   damageKnockback: 3
   knockbackDecay: 8
   damageEffect: {fileID: 3775773535762095067, guid: 0584e08d0b4dc4a4ca1774acf2724c1d, type: 3}
   explosionSFX: {fileID: 3090446682329436343, guid: 069c09f88894a6149846a5c4312c229b, type: 3}
+  isDead: 0
 --- !u!1 &893747157
 GameObject:
   m_ObjectHideFlags: 0
@@ -4892,13 +4897,14 @@ MonoBehaviour:
   isPursuing: 0
   isAttacking: 0
   explosionPrefab: {fileID: 1349139007720807997, guid: 4fb05a325bf641a4283b6430ee1b5e31, type: 3}
-  explodeRange: 1.5
+  explodeRange: 3
   timeBeforeAttack: 2
   maxHealth: 2
   damageKnockback: 3
   knockbackDecay: 8
   damageEffect: {fileID: 3775773535762095067, guid: 0584e08d0b4dc4a4ca1774acf2724c1d, type: 3}
   explosionSFX: {fileID: 3090446682329436343, guid: 069c09f88894a6149846a5c4312c229b, type: 3}
+  isDead: 0
 --- !u!1 &952641826
 GameObject:
   m_ObjectHideFlags: 0
@@ -11321,13 +11327,14 @@ MonoBehaviour:
   isPursuing: 0
   isAttacking: 0
   explosionPrefab: {fileID: 1349139007720807997, guid: 4fb05a325bf641a4283b6430ee1b5e31, type: 3}
-  explodeRange: 1.5
+  explodeRange: 3
   timeBeforeAttack: 2
   maxHealth: 2
   damageKnockback: 3
   knockbackDecay: 8
   damageEffect: {fileID: 3775773535762095067, guid: 0584e08d0b4dc4a4ca1774acf2724c1d, type: 3}
   explosionSFX: {fileID: 3090446682329436343, guid: 069c09f88894a6149846a5c4312c229b, type: 3}
+  isDead: 0
 --- !u!4 &2003174382
 Transform:
   m_ObjectHideFlags: 0

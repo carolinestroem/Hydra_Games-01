@@ -48,6 +48,7 @@ public class Enemy : MonoBehaviour
     private GameObject damageEffect;
     [SerializeField]
     private GameObject explosionSFX;
+    public bool isDead = false;
 
     private Vector2 knockbackVelocity;
 
@@ -82,7 +83,6 @@ public class Enemy : MonoBehaviour
 
             if (distanceToPlayer <= attackRange)
             {
-                
                 StartCoroutine(Attack());
             }
         }
@@ -116,6 +116,7 @@ public class Enemy : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            isDead = true;
             Destroy(gameObject);
             return;
         }
