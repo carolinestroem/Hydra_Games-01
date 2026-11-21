@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private Playercontroller playerController;
+    private AudioSettings audioSettings;
 
     [Header("Movement Settings")]
     [SerializeField]
@@ -48,7 +49,6 @@ public class Enemy : MonoBehaviour
     private GameObject damageEffect;
     [SerializeField]
     private GameObject explosionSFX;
-    public bool isDead = false;
 
     private Vector2 knockbackVelocity;
 
@@ -116,7 +116,19 @@ public class Enemy : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            isDead = true;
+            GameObject audioObject = Instantiate(explosionSFX, transform.position, Quaternion.identity);
+
+            AudioSettings audioSettings = audioObject.GetComponent<AudioSettings>();
+
+            if (audioSettings != null)
+            {
+                audioSettings.DeleteAudio();
+            }
+            else
+            {
+                Debug.LogError("AudioSettings component NOT FOUND on explosionSFX prefab!");
+            }
+
             Destroy(gameObject);
             return;
         }

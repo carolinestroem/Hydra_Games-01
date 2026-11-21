@@ -144,6 +144,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DestroyAfterAudio
   audioSource: {fileID: 52382050484708346}
   activePitchRandomizer: 1
-  deleteAudio: 0
+  deleteAudio: 1
   lowPitch: 0.9
   highPitch: 1.1
